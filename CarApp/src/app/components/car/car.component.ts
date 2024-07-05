@@ -1,6 +1,11 @@
 import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,9 +23,12 @@ export class CarComponent implements OnInit {
   form: FormGroup;
   constructor(private fb: FormBuilder, private toastr: ToastrService) {
     this.form = this.fb.group({
-      brand: ['',Validators.required],
-      year: ['',[Validators.max(2099),Validators.min(1900),Validators.required]],
-      model: ['',Validators.required],
+      brand: ['', Validators.required],
+      year: [
+        '',
+        [Validators.max(2099), Validators.min(1900), Validators.required],
+      ],
+      model: ['', Validators.required],
     });
   }
 
@@ -32,9 +40,14 @@ export class CarComponent implements OnInit {
       model: this.form.get('model')?.value,
       year: this.form.get('year')?.value,
     };
-    
+
     this.listCars.push(car);
-    this.toastr.success('Car was saved succesfully!', 'Car Saved'); 
+    this.toastr.success('Car was saved succesfully!', 'Car Saved');
     this.form.reset();
+  }
+
+  removeCar(id: number) {
+    this.listCars.splice(id, 1);
+    this.toastr.error('Car was eliminated succesfully!', 'Car Deleted');
   }
 }

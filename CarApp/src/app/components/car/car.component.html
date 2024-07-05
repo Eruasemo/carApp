@@ -95,12 +95,12 @@
               <th scope="col">Year</th>
               <th scope="col" colspan="2">Actions</th>
             </tr>
-            <tr *ngFor="let car of listCars">
+            <tr *ngFor="let car of listCars; let i = index">
               <td>{{ car.brand }}</td>
               <td>{{ car.model }}</td>
               <td>{{ car.year }}</td>
               <td><i class="fa-regular fa-pen-to-square text-success"></i></td>
-              <td><i class="fa-regular fa-trash-can text-danger"></i></td>
+              <td><i (click)="removeCar(i)" class="fa-regular fa-trash-can text-danger"></i></td>
             </tr>
           </tbody>
         </table>
