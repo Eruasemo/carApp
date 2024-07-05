@@ -1,0 +1,110 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="title">Cars</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="title">Add Car</h5>
+        <form [formGroup]="form" (ngSubmit)="addCar()">
+          <div class="input-group-lg input-group mb-3">
+            <span class="input-group-text" id="brand"
+              ><i
+                class="fa-solid fa-copyright"
+                [class.text-success]="this.form.get('brand')?.valid"
+                [class.text-danger]="
+                  this.form.get('brand')?.invalid &&
+                  this.form.get('brand')?.touched
+                "
+              ></i
+            ></span>
+            <input
+              formControlName="brand"
+              type="text"
+              class="form-control"
+              placeholder="Brand"
+              aria-label="Brand"
+              aria-describedby="brand"
+            />
+          </div>
+          <div class="input-group-lg input-group mb-3">
+            <span class="input-group-text" id="model"
+              ><i
+                class="fa-solid fa-car"
+                [class.text-success]="this.form.get('model')?.valid"
+                [class.text-danger]="
+                  this.form.get('model')?.invalid &&
+                  this.form.get('model')?.touched
+                "
+              ></i
+            ></span>
+            <input
+              formControlName="model"
+              type="text"
+              class="form-control"
+              placeholder="Model"
+              aria-label="Model"
+              aria-describedby="model"
+            />
+          </div>
+          <div class="input-group-lg input-group mb-3">
+            <span class="input-group-text" id="year"
+              ><i
+                class="fa-solid fa-calendar-days"
+                [class.text-success]="this.form.get('year')?.valid"
+                [class.text-danger]="
+                  this.form.get('year')?.invalid &&
+                  this.form.get('year')?.touched
+                "
+              ></i
+            ></span>
+            <input
+              formControlName="year"
+              type="number"
+              class="form-control"
+              placeholder="Year"
+              aria-label="Year"
+              aria-describedby="year"
+            />
+          </div>
+          <div class="d-grid gap-2">
+            <button [disabled]="this.form.invalid" type="submit" class="btn btn-primary mb-3">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="title">List Cars</h5>
+        <table class="table-responsive table">
+          <tbody class="text-center">
+            <tr>
+              <th scope="col">Brand</th>
+              <th scope="col">Model</th>
+              <th scope="col">Year</th>
+              <th scope="col" colspan="2">Actions</th>
+            </tr>
+            <tr *ngFor="let car of listCars">
+              <td>{{ car.brand }}</td>
+              <td>{{ car.model }}</td>
+              <td>{{ car.year }}</td>
+              <td><i class="fa-regular fa-pen-to-square text-success"></i></td>
+              <td><i class="fa-regular fa-trash-can text-danger"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
