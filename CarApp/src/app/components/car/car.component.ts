@@ -18,7 +18,7 @@ import { CarService } from '../../services/car.service';
 })
 export class CarComponent implements OnInit {
   action: string = 'Add';
-  id:number | undefined;
+  id: number | undefined;
   listCars: any[] = [
     { model: 'chevy', brand: 'chevrolet', year: 1998 },
     { model: 'Tsuru', brand: 'Nissan', year: 2003 },
@@ -50,27 +50,40 @@ export class CarComponent implements OnInit {
       year: this.form.get('year')?.value,
     };
     if (this.id) {
-      car.id=this.id;
-      this._carService.update(car).subscribe(data=>{
+      car.id = this.id;
+      this._carService.update(car).subscribe((data) => {
         this.toastr.info(
           `${data.brand} ${data.model} ${data.year} was updated succesfully!`,
           'Car Updated'
         );
         this.form.reset();
         this.getCars();
-        this.action="Add";
+        this.action = 'Add';
         this.id = undefined;
-      })
-    } else {
-      //this.listCars.push(car);
-      this._carService.create(car).subscribe((data) => {
-        this.toastr.success(
-          `${data.brand} ${data.model} ${data.year} was saved succesfully!`,
-          'Car Saved'
-        );
-        this.form.reset();
-        this.getCars();
       });
+    } else {
+      const check = this.listCars.some(
+        (carCheck) =>
+          car.brand === carCheck.brand &&
+          car.model === carCheck.model &&
+          car.year === carCheck.year
+      );
+      if (!check) {
+        //this.listCars.push(car);
+        this._carService.create(car).subscribe((data) => {
+          this.toastr.success(
+            `${data.brand} ${data.model} ${data.year} was saved succesfully!`,
+            'Car Saved'
+          );
+          this.form.reset();
+          this.getCars();
+        });
+      } else {        
+        this.toastr.warning(
+          `${car.brand} ${car.model} ${car.year} already exists`,
+          'Car dup'
+        );
+      }
     }
   }
 
@@ -94,10 +107,10 @@ export class CarComponent implements OnInit {
     this.form.patchValue({
       brand: car.brand,
       model: car.model,
-      year: car.year,      
+      year: car.year,
     });
     this.action = 'Edit';
-    this.id= car.id;
+    this.id = car.id;
   }
 
   getCars() {
