@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using TestAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,8 +16,6 @@ namespace TestAPI.Controllers
         {
             _dbContext = dbContext;
         }
-
-
 
         // GET: api/<ValuesController>
         [HttpGet]
@@ -44,14 +42,13 @@ namespace TestAPI.Controllers
                 if (car == null)
                 {
                     return NotFound();
-                }                
+                }
                 return Ok(car);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
 
         // POST api/<ValuesController>
@@ -64,7 +61,7 @@ namespace TestAPI.Controllers
                 await _dbContext.SaveChangesAsync();
                 return Ok(car);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -93,7 +90,7 @@ namespace TestAPI.Controllers
             try
             {
                 var car = await _dbContext.Car.FindAsync(id);
-                if(car == null)
+                if (car == null)
                 {
                     return NotFound();
                 }
